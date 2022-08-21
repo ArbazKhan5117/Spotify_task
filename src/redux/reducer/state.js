@@ -1,3 +1,4 @@
 export const initialState = {
-    auth: 'not'
+    auth: 'not',
+    users: []
 };

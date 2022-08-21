@@ -4,12 +4,16 @@ import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import * as Yup from 'yup';
 import { useFormik, Field, ErrorMessage } from 'formik';
 import Paper from '@mui/material/Paper';
 import {Data} from '../../App';
+import { addUser } from '../../redux/actions/actions';
 export default function Signup (){
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+    const allUsers = useSelector(state => state.users);
     const {userData, setUserData} = useContext(Data);
     const initialValues={
         first: '',
@@ -38,6 +42,10 @@ export default function Signup (){
         }
          if(!existed){
             setUserData(userData=>[...userData, values]);
+            console.log('In else ', allUsers);
+            const tempArr = [...allUsers, values];
+            console.log('tempArr is ', tempArr);
+            dispatch(addUser(tempArr));
             alert('form is submitted');
          }
         }catch(error){

@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import { handleLogin } from '../../redux/actions/actions';
 export default function Login (){
     let navigate = useNavigate();
+    const isAuthenticated = useSelector(state => state.auth);
     const {userData} = useContext(Data);
     const [userEmail, setUserEmail] = useState('');
     const { email } = useParams();
@@ -32,7 +33,8 @@ export default function Login (){
         for(let i=0; i<userData?.length; i++){
             if(userData[i].email === values.email && userData[i].password === values.password){
                 alert('Signed In successfully');
-                dispatch(handleLogin('yes'));
+                localStorage.setItem('auth', true);
+                dispatch(handleLogin(userData[i].first));
                 navigate(`/`);
             }
         }
@@ -61,28 +63,6 @@ export default function Login (){
             <p className='mt-5'>If you have not already account <Link to="/signup"><span className="text-blue-600 cursor-pointer">Click here</span></Link></p>
         </Paper>
         </div>
-
-
-
-
-
-
-
-
-    //     <div>
-    //         <h2 className="heading mb-10">Login Page</h2>
-    //         <Box
-    //           component="form"
-    //            sx={{
-    //              '& .MuiTextField-root': { m: 1, width: '25ch' },
-    //              }}
-    //            noValidate
-    //            autoComplete="off"
-    // >
-    //         <TextField error id="standard-error-helper-text" label="Email" helperText="Incorrect entry." type="email" variant="standard"/><br />
-    //         <Button variant="contained" sx={{marginTop: '30px'}} onClick={handleLogin}>Login</Button>
-    //     </Box>
-    //     </div>
         
     );
 }
